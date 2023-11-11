@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 const ProductsPage: FC = () => {
-  return (
-    <section>
-        <h1>Products:</h1>
-    </section>
-  )
-}
+    return (
+        <section>
+            <h1>Products:</h1>
+        </section>
+    );
+};
 
 export default ProductsPage;
