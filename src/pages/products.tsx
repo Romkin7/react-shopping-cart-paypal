@@ -5,6 +5,7 @@ import fetchProducts from './api/products';
 import { setProducts } from '../store/actions/productActions';
 import IProduct from '../@types/product';
 import ProductCard from '../components/ProductCard/ProductCard';
+import Button from '../components/Button/Button';
 
 const ProductsPage: FC = () => {
     const products = useSelector((state: AppState) => state.products);
@@ -19,6 +20,8 @@ const ProductsPage: FC = () => {
             return dispatch(setProducts(data.products));
         });
     }, [dispatch]);
+
+    
     return (
         <section>
             <div className="container">
@@ -41,6 +44,7 @@ const ProductsPage: FC = () => {
                                         price={product.price}
                                         title={product.title}
                                     />
+                                    
                                 </div>
                             );
                         })}

@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import IImage from '../../@types/image';
 import Image from '../Image/Image';
 import clsx from 'clsx';
+import Button from '../Button/Button';
 
 interface ProductCardProps {
     image: IImage;
@@ -10,7 +11,7 @@ interface ProductCardProps {
     brand: string;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ image, title, brand }) => {
+const ProductCard: FC<ProductCardProps> = ({ image, title, price, brand }) => {
     const productCardSyles = clsx({
         ['productCard']: true,
     });
@@ -22,6 +23,8 @@ const ProductCard: FC<ProductCardProps> = ({ image, title, brand }) => {
             <div className="productCard--body">
                 <p>{brand}</p>
                 <h3>{title}</h3>
+                <p>${String(price)}</p>
+                <Button type="button" size="s" variant='primary'> Add to Cart </Button>
             </div>
         </article>
     );
