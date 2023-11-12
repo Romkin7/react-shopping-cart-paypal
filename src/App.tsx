@@ -1,11 +1,24 @@
 import React, { FC } from 'react';
-import './App.css';
-import Cart from './pages/cart';
+import './App.scss';
+import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import ProductsPage from './pages/products';
+import CartPage from './pages/cart';
+
+const router = createBrowserRouter([
+    {
+        path : '/',
+        element: <ProductsPage />
+    },
+    {
+        path: '/cart',
+        element: <CartPage />
+    }
+])
 
 const App: FC = () => {
     return (
         <main>
-            <Cart />
+            <RouterProvider router={router} />
         </main>
     );
 };

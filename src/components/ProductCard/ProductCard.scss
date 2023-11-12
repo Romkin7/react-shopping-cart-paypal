@@ -1,0 +1,14 @@
+.productCard {
+    display: flex;
+    flex-direction: column;
+
+    &--head{
+        display: flex;
+    }
+
+    &--body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
