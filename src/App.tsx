@@ -1,19 +1,19 @@
 import React, { FC } from 'react';
 import './App.scss';
-import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProductsPage from './pages/products';
 import CartPage from './pages/cart';
 
 const router = createBrowserRouter([
     {
-        path : '/',
-        element: <ProductsPage />
+        path: '/',
+        element: <ProductsPage />,
     },
     {
         path: '/cart',
-        element: <CartPage />
-    }
-])
+        element: <CartPage />,
+    },
+]);
 
 const App: FC = () => {
     return (

@@ -26,7 +26,7 @@ export type Brands =
     | 'LED Lights'
     | 'luxury palace'
     | 'Golden';
-    export type Categories =
+export type Categories =
     | 'smartphones'
     | 'laptops'
     | 'fragrances'
