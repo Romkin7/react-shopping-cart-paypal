@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store/store';
 import ICartItem from '../@types/cartItem';
+import Button from '../components/Button/Button';
 
 const CartPage: FC = () => {
     const cart = useSelector((state: AppState) => state.cart);
@@ -19,6 +20,7 @@ const CartPage: FC = () => {
                         );
                     })}
                 </ul>
+                <Button variant="warning" size="s" type="button">Buy</Button>
             </div>
         </section>
     );
