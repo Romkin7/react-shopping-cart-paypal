@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import IImage from '../../@types/image';
 import Image from '../Image/Image';
 import clsx from 'clsx';

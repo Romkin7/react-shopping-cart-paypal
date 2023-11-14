@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import './App.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProductsPage from './pages/products';

@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, PropsWithChildren } from 'react';
+import { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import clsx from 'clsx';
 import './Button.scss';
 
