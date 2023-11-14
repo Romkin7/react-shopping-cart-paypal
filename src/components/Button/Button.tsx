@@ -1,6 +1,7 @@
 import React, { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import clsx from 'clsx';
 import './Button.scss';
+
 type ButtonTypes = 'button' | 'submit' | 'reset';
 type ButtonSizes = 's' | 'm';
 type ButtonVariants = 'primary' | 'success' | 'warning' | 'danger' | 'disabled';
@@ -14,7 +15,13 @@ interface IButtonProps {
 
 type ButtonProps = PropsWithChildren<IButtonProps>;
 
-const Button: FC<ButtonProps> = ({ type, children, size, variant, onClick }) => {
+const Button: FC<ButtonProps> = ({
+    type,
+    children,
+    size,
+    variant,
+    onClick,
+}) => {
     const buttonStyles = clsx({
         ['button']: true,
         [`button--${size}`]: true,

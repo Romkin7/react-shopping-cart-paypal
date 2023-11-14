@@ -20,7 +20,9 @@ const CartPage: FC = () => {
                         );
                     })}
                 </ul>
-                <Button variant="warning" size="s" type="button">Buy</Button>
+                <Button variant="warning" size="s" type="button">
+                    Buy
+                </Button>
             </div>
         </section>
     );

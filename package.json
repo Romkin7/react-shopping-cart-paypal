@@ -9,7 +9,8 @@
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "prettier:test": "prettier --check \"src/**/*.ts*\"",
-        "prettier:fix": "prettier --write \"src/**/*.ts*\""
+        "prettier:fix": "prettier --write \"src/**/*.ts*\"",
+        "prepare": "husky install"
     },
     "dependencies": {
         "clsx": "^2.0.0",
@@ -32,6 +33,7 @@
         "eslint": "8.45.0",
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-plugin-react-refresh": "0.4.3",
+        "husky": "^8.0.3",
         "prettier": "3.0.3",
         "typescript": "5.0.2",
         "vite": "4.4.5"

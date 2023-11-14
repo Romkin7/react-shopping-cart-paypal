@@ -4,6 +4,7 @@ import Image from '../Image/Image';
 import clsx from 'clsx';
 import Button from '../Button/Button';
 import './ProductCard.scss';
+
 interface ProductCardProps {
     image: IImage;
     title: string;
@@ -23,8 +24,11 @@ const ProductCard: FC<ProductCardProps> = ({ image, title, price, brand }) => {
             <div className="productCard--body">
                 <p>{brand}</p>
                 <h3>{title}</h3>
-                <p className='productCard--body_price'>${String(price)}</p>
-                <Button type="button" size="s" variant='success'> Add to Cart </Button>
+                <p className="productCard--body_price">${String(price)}</p>
+                <Button type="button" size="s" variant="success">
+                    {' '}
+                    Add to Cart{' '}
+                </Button>
             </div>
         </article>
     );
