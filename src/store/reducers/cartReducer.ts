@@ -6,8 +6,26 @@ import CartActionTypes, {
 
 const DEFAULT_STATE: ICart = {
     items: [
-        { name: 'Fruits', price: 20, quantity: 2, avatar: 'image', id: 1 },
-        { name: 'Vegetables', price: 40, quantity: 3, avatar: 'image', id: 2 },
+        {
+            title: 'Fruits',
+            price: 20,
+            quantity: 2,
+            thumbnail: 'image',
+            id: 1,
+            category: 'groceries',
+            brand: 'Bake Parlor Big',
+            description: 'lorem',
+        },
+        {
+            title: 'Vegetables',
+            price: 40,
+            quantity: 3,
+            thumbnail: 'image',
+            id: 2,
+            category: 'groceries',
+            brand: 'Bake Parlor Big',
+            description: 'lorem',
+        },
     ],
 };
 const cartReducer = (state = DEFAULT_STATE, action: CartActionTypes) => {

@@ -15,8 +15,8 @@ const CartPage: FC = () => {
                     {cart.items.map((item: ICartItem) => {
                         return (
                             <li
-                                key={item.name}
-                            >{`${item.name} $${item.price} ${item.quantity}pieces`}</li>
+                                key={item.title}
+                            >{`${item.title} $${item.price} ${item.quantity}pieces`}</li>
                         );
                     })}
                 </ul>

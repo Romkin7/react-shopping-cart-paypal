@@ -34,17 +34,20 @@ export type Categories =
     | 'groceries'
     | 'home-decoration';
 
-interface IProduct {
+export interface IBaseProduct {
     id: number;
     title: string;
     description: string;
     price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
     brand: Brands;
     category: Categories;
     thumbnail: string;
+}
+
+interface IProduct extends IBaseProduct {
+    discountPercentage: number;
+    rating: number;
+    stock: number;
     images: string[];
 }
 
