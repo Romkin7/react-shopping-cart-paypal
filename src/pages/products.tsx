@@ -1,17 +1,19 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { AppState } from '../store/store';
 import fetchProducts from './api/products';
 import { setProducts } from '../store/actions/productActions';
 import IProduct from '../@types/product';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Button from '../components/Button/Button';
+import Cart from '../models/cart';
 
 const ProductsPage: FC = () => {
     const [searchInput, setSearchInput] = useState<string>(() => '');
     const [searchParams, setSearchParams] = useSearchParams({});
     const products = useSelector((state: AppState) => state.products);
+    const cartFromState = useSelector((state: AppState) => state.cart);
     const dispatch = useDispatch();
     const location = useLocation();
     // const setProductsFunction = useCallback(() => {
@@ -23,6 +25,8 @@ const ProductsPage: FC = () => {
             return dispatch(setProducts(data.products));
         });
     }, [dispatch]);
+
+    const cart = new Cart(cartFromState);
 
     const updateSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
         location.search = searchParams.get('search') as string;
@@ -57,22 +61,16 @@ const ProductsPage: FC = () => {
                             Search
                         </Button>
                     </form>
+                    <Link to="/cart">{`${
+                        cart.itemsToArray().length
+                    } items in a cart`}</Link>
                 </div>
                 {products.length ? (
                     <div className="row d-flex justify-content-start my-4">
                         {products.map((product: IProduct) => {
                             return (
                                 <div key={product.id} className="col-md-3 mb-4">
-                                    <ProductCard
-                                        image={{
-                                            alt: product.title,
-                                            title: `${product.title} ${product.brand}`,
-                                            src: product.thumbnail,
-                                        }}
-                                        brand={product.brand}
-                                        price={product.price}
-                                        title={product.title}
-                                    />
+                                    <ProductCard product={product} />
                                 </div>
                             );
                         })}

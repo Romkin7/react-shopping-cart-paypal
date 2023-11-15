@@ -3,20 +3,22 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../store/store';
 import ICartItem from '../@types/cartItem';
 import Button from '../components/Button/Button';
+import Cart from '../models/cart';
 
 const CartPage: FC = () => {
-    const cart = useSelector((state: AppState) => state.cart);
-
+    const cartFromState = useSelector((state: AppState) => state.cart);
+    const cart = new Cart(cartFromState);
+    console.log(cart.itemsToArray());
     return (
         <section>
             <h1>Cart</h1>
             <div>
                 <ul>
-                    {cart.items.map((item: ICartItem) => {
+                    {cart.itemsToArray().map((item: ICartItem) => {
                         return (
                             <li
-                                key={item.title}
-                            >{`${item.title} $${item.price} ${item.quantity}pieces`}</li>
+                                key={item.id}
+                            >{`${item.title} $${item.price} ${item.quantity} pieces`}</li>
                         );
                     })}
                 </ul>

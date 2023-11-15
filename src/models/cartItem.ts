@@ -1,5 +1,5 @@
 import ICartItem from '../@types/cartItem';
-import { Brands, Categories } from '../@types/product';
+import IProduct, { Brands, Categories } from '../@types/product';
 
 class CartItem implements ICartItem {
     id: number;
@@ -11,7 +11,7 @@ class CartItem implements ICartItem {
     thumbnail: string;
     quantity: number;
 
-    constructor(cartItem: ICartItem, totalQuantity: number) {
+    constructor(cartItem: IProduct, totalQuantity: number) {
         this.id = cartItem.id || 0;
         this.title = cartItem.title || '';
         this.brand = cartItem.brand || null;

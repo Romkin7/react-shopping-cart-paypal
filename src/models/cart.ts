@@ -1,9 +1,10 @@
 import ICart from '../@types/cart';
 import ICartItem from '../@types/cartItem';
+import IProduct from '../@types/product';
 import CartItem from './cartItem';
 
 class Cart implements ICart {
-    items: ICartItem[];
+    items: Record<string, ICartItem>;
 
     constructor(cart: ICart) {
         this.items = cart.items || {};
@@ -12,12 +13,12 @@ class Cart implements ICart {
     itemsToArray() {
         const itemsArr: ICartItem[] = [];
         for (const item in this.items) {
-            itemsArr.push(item as unknown as ICartItem);
+            itemsArr.push(this.items[item]);
         }
         return itemsArr;
     }
 
-    addItem(item: ICartItem, totalQuantity: number) {
+    addItem(item: IProduct, totalQuantity: number) {
         let existingItem = this.items[item.id];
         if (!existingItem) {
             existingItem = this.items[item?.id] = new CartItem(

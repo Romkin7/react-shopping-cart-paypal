@@ -1,7 +1,7 @@
 import ICartItem from './cartItem';
 
 interface ICart {
-    items: ICartItem[];
+    items: Record<string, ICartItem>;
 }
 
 export default ICart;
