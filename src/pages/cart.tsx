@@ -8,7 +8,6 @@ import Cart from '../models/cart';
 const CartPage: FC = () => {
     const cartFromState = useSelector((state: AppState) => state.cart);
     const cart = new Cart(cartFromState);
-    console.log(cart.itemsToArray());
     return (
         <section>
             <h1>Cart</h1>
