@@ -1,9 +1,7 @@
-interface ICartItem {
-    name: string;
-    price: number;
+import { IBaseProduct } from "./product";;
+
+interface ICartItem extends IBaseProduct {
     quantity: number;
-    avatar?: string;
-    id: number;
 }
 
 export default ICartItem;
