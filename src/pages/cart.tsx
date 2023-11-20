@@ -20,6 +20,7 @@ const CartPage: FC = () => {
                             >{`${item.title} $${item.price} ${item.quantity} pieces`}</li>
                         );
                     })}
+                    <li>{`total price: $${cart.getTotalPrice()}`}</li>
                 </ul>
                 <Button variant="warning" size="s" type="button">
                     Buy

@@ -18,7 +18,7 @@ const AddToCartForm: FC<AddToCartProps> = ({ product, children }) => {
     const addToCart = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const newCart = new Cart(cart);
-        const updatedCart = newCart.addItem(product as IProduct, 1);
+        const updatedCart = newCart.addItem(product as IProduct);
         dispatch(setCart(updatedCart));
     };
     return (

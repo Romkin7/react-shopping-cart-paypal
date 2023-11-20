@@ -16,7 +16,7 @@ const Navbar: FC = () => {
                         Products
                     </Link>
                     <Link className="navbar-brand" to="/cart">
-                        {`Cart ${cart.itemsToArray().length} items`}
+                        {`Cart ${cart.getTotalQuantity()} items`}
                     </Link>
                     <SearchForm />
                 </div>

@@ -18,15 +18,16 @@ class Cart implements ICart {
         return itemsArr;
     }
 
-    addItem(item: IProduct, totalQuantity: number) {
+    addItem(item: IProduct) {
         let existingItem = this.items[item.id];
         if (!existingItem) {
+            existingItem = this.items[item?.id] = new CartItem(item, 1);
+        } else {
+            const newQuantity = existingItem.quantity + 1;
             existingItem = this.items[item?.id] = new CartItem(
                 item,
-                totalQuantity,
+                newQuantity,
             );
-        } else {
-            existingItem.quantity = totalQuantity;
         }
         return this;
     }
@@ -45,6 +46,21 @@ class Cart implements ICart {
         );
         if (itemsTotalPrices.length) {
             const reduced = itemsTotalPrices.reduce(reducer);
+            return reduced;
+        } else {
+            return 0;
+        }
+    }
+
+    getTotalQuantity() {
+        const itemsArray = this.itemsToArray();
+        const reducer = (accumulator: number, currentValue: number): number =>
+            accumulator + currentValue;
+        const itemsTotalQuantities = itemsArray.map(
+            (item: ICartItem) => item.quantity,
+        );
+        if (itemsTotalQuantities.length) {
+            const reduced = itemsTotalQuantities.reduce(reducer);
             return reduced;
         } else {
             return 0;
