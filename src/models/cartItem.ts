@@ -11,7 +11,7 @@ class CartItem implements ICartItem {
     thumbnail: string;
     quantity: number;
 
-    constructor(cartItem: IProduct, totalQuantity: number) {
+    constructor(cartItem: IProduct | ICartItem, totalQuantity: number) {
         this.id = cartItem.id || 0;
         this.title = cartItem.title || '';
         this.description = cartItem.description || '';
