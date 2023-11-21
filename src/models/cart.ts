@@ -24,7 +24,10 @@ class Cart implements ICart {
             existingItem = this.items[item?.id] = new CartItem(item, 1);
         } else {
             const newQuantity = existingItem.quantity + 1;
-            existingItem = this.items[item?.id] = new CartItem(item, newQuantity);
+            existingItem = this.items[item?.id] = new CartItem(
+                item,
+                newQuantity,
+            );
         }
         return this;
     }

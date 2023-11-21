@@ -6,7 +6,6 @@ import { setProducts } from '../store/actions/productActions';
 import IProduct from '../@types/product';
 import ProductCard from '../components/ProductCard/ProductCard';
 
-
 const ProductsPage: FC = () => {
     const products = useSelector((state: AppState) => state.products);
     const dispatch = useDispatch();

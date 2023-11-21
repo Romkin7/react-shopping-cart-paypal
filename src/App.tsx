@@ -10,12 +10,11 @@ const App: FC = () => {
         <BrowserRouter basename="/">
             <Navbar />
             <main className="mt-5">
-            <Routes>
-                <Route path="/" index={true} element={<ProductsPage />} />
-                <Route path="/cart" index={true} element={<CartPage />} />
-            </Routes>
+                <Routes>
+                    <Route path="/" index={true} element={<ProductsPage />} />
+                    <Route path="/cart" index={true} element={<CartPage />} />
+                </Routes>
             </main>
-           
         </BrowserRouter>
     );
 };
