@@ -42,7 +42,6 @@ export interface IBaseProduct {
     brand: Brands;
     category: Categories;
     thumbnail: string;
-    
 }
 
 interface IProduct extends IBaseProduct {

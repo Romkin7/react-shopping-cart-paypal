@@ -1,20 +1,25 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import IImage from '../../@types/image';
 import Image from '../Image/Image';
 import clsx from 'clsx';
 import Button from '../Button/Button';
 import './ProductCard.scss';
+import AddToCartForm from './AddToCartForm';
+import IProduct from '../../@types/product';
 interface ProductCardProps {
-    image: IImage;
-    title: string;
-    price: string | number;
-    brand: string;
+    product: IProduct;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ image, title, price, brand }) => {
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
     const productCardSyles = clsx({
         ['productCard']: true,
     });
+    const { brand, price, title } = product;
+    const image: IImage = {
+        alt: product.title,
+        title: `${product.title} ${product.brand}`,
+        src: product.thumbnail,
+    };
     return (
         <article className={productCardSyles}>
             <div className="productCard--head">
@@ -23,8 +28,13 @@ const ProductCard: FC<ProductCardProps> = ({ image, title, price, brand }) => {
             <div className="productCard--body">
                 <p>{brand}</p>
                 <h3>{title}</h3>
-                <p className='productCard--body_price'>${String(price)}</p>
-                <Button type="button" size="s" variant='success'> Add to Cart </Button>
+                <p className="productCard--body_price">${String(price)}</p>
+                <AddToCartForm product={product}>
+                    <Button type="submit" size="s" variant="success">
+                        {' '}
+                        Add to Cart{' '}
+                    </Button>
+                </AddToCartForm>
             </div>
         </article>
     );
