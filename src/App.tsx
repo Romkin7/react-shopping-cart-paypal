@@ -1,25 +1,21 @@
-import React, { FC } from 'react';
-import './App.scss';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { FC } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProductsPage from './pages/products';
 import CartPage from './pages/cart';
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <ProductsPage />,
-    },
-    {
-        path: '/cart',
-        element: <CartPage />,
-    },
-]);
+import Navbar from './components/Navbar/Navbar';
+import './App.scss';
 
 const App: FC = () => {
     return (
-        <main>
-            <RouterProvider router={router} />
-        </main>
+        <BrowserRouter basename="/">
+            <Navbar />
+            <main className="mt-5">
+                <Routes>
+                    <Route path="/" index={true} element={<ProductsPage />} />
+                    <Route path="/cart" index={true} element={<CartPage />} />
+                </Routes>
+            </main>
+        </BrowserRouter>
     );
 };
 
