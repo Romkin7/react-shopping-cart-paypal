@@ -1,0 +1,20 @@
+.icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &--sm {
+        height: 0.75rem;
+        width: 0.75rem;
+    }
+
+    &--md {
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    &--lg {
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+}

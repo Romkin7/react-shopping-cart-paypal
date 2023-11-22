@@ -1,4 +1,4 @@
-.button{
+.button {
     border-width: 2px;
     border-style: solid;
     color: #ffffff;
@@ -28,7 +28,6 @@
         &:hover {
             background-color: #4b0082;
         }
-        
     }
 
     &--success {
@@ -45,8 +44,16 @@
         border-color: #f7a100;
 
         &:hover {
-            background-color:#f7a000;;
+            background-color: #f7a000;
         }
+    }
 
+    &--danger {
+        background-color: rgba(#e41a21, 0.7);
+        border-color: #e41a21;
+
+        &:hover {
+            background-color: #e41a21;
+        }
     }
 }

@@ -28,9 +28,9 @@ const Button: FC<ButtonProps> = ({
         [`button--${variant}`]: true,
     });
     return (
-            <button className={buttonStyles} type={type} onClick={onClick}>
-                {children}
-            </button>
+        <button className={buttonStyles} type={type} onClick={onClick}>
+            {children}
+        </button>
     );
 };
 
