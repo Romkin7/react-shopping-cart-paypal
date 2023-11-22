@@ -22,7 +22,7 @@ class CartItem implements ICartItem {
         this.quantity = totalQuantity || 0;
     }
 
-    getTotalItemsPrice(): number {
+    getItemsTotalPrice(): number {
         return this.price * this.quantity;
     }
 }

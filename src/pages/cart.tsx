@@ -16,22 +16,31 @@ const CartPage: FC = () => {
             <div>
                 <ul>
                     {cart.itemsToArray().map((item: ICartItem) => {
-                        const cartItem = new CartItem(item,item.quantity)
-                        return (  
-                            <li className="d-flex align-items-center mb-4"
+                        const cartItem = new CartItem(item, item.quantity);
+                        return (
+                            <li
+                                className="d-flex align-items-center mb-4"
                                 key={cartItem.id}
                             >
-                                <p className="me-4">{`${cartItem.title} $${cartItem.price} ${cartItem.quantity}pieces`}</p>
-                                <RemoveFromCartForm id={cartItem.id} />
+                                <p className="me-4">{`${
+                                    cartItem.title
+                                } $${cartItem.getItemsTotalPrice()} ${
+                                    cartItem.quantity
+                                }pieces`}</p>
+                                <RemoveFromCartForm
+                                    id={cartItem.id}
+                                    title={cartItem.title}
+                                />
                             </li>
                         );
                     })}
-                    <li><h4>{`total price: $${cart.getTotalPrice()}`}</h4></li>
+                    <li>
+                        <h4>{`total price: $${cart.getTotalPrice()}`}</h4>
+                    </li>
                 </ul>
                 <Button variant="success" size="s" type="button">
                     Buy
                 </Button>
-                
             </div>
         </section>
     );
