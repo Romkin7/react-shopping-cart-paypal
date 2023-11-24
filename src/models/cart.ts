@@ -18,15 +18,16 @@ class Cart implements ICart {
         return itemsArr;
     }
 
-    addItem(item: IProduct) {
+    addItem(item: IProduct | ICartItem, itemsTotalQuantity?: number) {
         let existingItem = this.items[item.id];
         if (!existingItem) {
             existingItem = this.items[item?.id] = new CartItem(item, 1);
         } else {
-            const newQuantity = existingItem.quantity + 1;
+            const totalQuantity =
+                itemsTotalQuantity || existingItem.quantity + 1;
             existingItem = this.items[item?.id] = new CartItem(
                 item,
-                newQuantity,
+                totalQuantity,
             );
         }
         return this;

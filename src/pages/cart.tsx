@@ -4,8 +4,8 @@ import { AppState } from '../store/store';
 import ICartItem from '../@types/cartItem';
 import Button from '../components/Button/Button';
 import Cart from '../models/cart';
-import RemoveFromCartForm from '../components/RemoveFromCartForm/RemoveFromCartForm';
 import CartItem from '../models/cartItem';
+import ModButtons from '../components/ModButtons/ModButtons';
 
 const CartPage: FC = () => {
     const cartFromState = useSelector((state: AppState) => state.cart);
@@ -27,10 +27,7 @@ const CartPage: FC = () => {
                                 } $${cartItem.getItemsTotalPrice()} ${
                                     cartItem.quantity
                                 }pieces`}</p>
-                                <RemoveFromCartForm
-                                    id={cartItem.id}
-                                    title={cartItem.title}
-                                />
+                                <ModButtons item={cartItem} />
                             </li>
                         );
                     })}
@@ -38,7 +35,12 @@ const CartPage: FC = () => {
                         <h4>{`total price: $${cart.getTotalPrice()}`}</h4>
                     </li>
                 </ul>
-                <Button variant="success" size="s" type="button">
+                <Button
+                    variant="success"
+                    size="s"
+                    type="button"
+                    borderRadius="rounded"
+                >
                     Buy
                 </Button>
             </div>
