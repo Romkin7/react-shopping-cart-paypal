@@ -2,7 +2,7 @@ import { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import clsx from 'clsx';
 import './Button.scss';
 
-type ButtonRadiuses = 'none' | 'rounded' | 'rounded-left' | 'rounded-right';
+type BorderRadiuses = 'none' | 'rounded' | 'rounded-left' | 'rounded-right';
 type ButtonTypes = 'button' | 'submit' | 'reset';
 type ButtonSizes = 's' | 'm';
 type ButtonVariants = 'primary' | 'success' | 'warning' | 'danger' | 'disabled';
@@ -11,7 +11,7 @@ interface IButtonProps {
     type: ButtonTypes;
     size: ButtonSizes;
     variant: ButtonVariants;
-    borderRadius: ButtonRadiuses;
+    borderRadius: BorderRadiuses;
     onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 

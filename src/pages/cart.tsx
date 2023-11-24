@@ -4,7 +4,6 @@ import { AppState } from '../store/store';
 import ICartItem from '../@types/cartItem';
 import Button from '../components/Button/Button';
 import Cart from '../models/cart';
-import RemoveFromCartForm from '../components/RemoveFromCartForm/RemoveFromCartForm';
 import CartItem from '../models/cartItem';
 import ModButtons from '../components/ModButtons/ModButtons';
 
@@ -28,7 +27,6 @@ const CartPage: FC = () => {
                                 } $${cartItem.getItemsTotalPrice()} ${
                                     cartItem.quantity
                                 }pieces`}</p>
-
                                 <ModButtons item={cartItem} />
                             </li>
                         );
