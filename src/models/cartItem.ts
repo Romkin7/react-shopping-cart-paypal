@@ -10,6 +10,7 @@ class CartItem implements ICartItem {
     category: Categories;
     thumbnail: string;
     quantity: number;
+    stock: number;
 
     constructor(cartItem: IProduct | ICartItem, totalQuantity: number) {
         this.id = cartItem.id || 0;
@@ -20,6 +21,7 @@ class CartItem implements ICartItem {
         this.category = cartItem.category || '';
         this.thumbnail = cartItem.thumbnail || '';
         this.quantity = totalQuantity || 0;
+        this.stock = cartItem.stock || 0;
     }
 
     getItemsTotalPrice(): number {

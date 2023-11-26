@@ -30,7 +30,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
                 <h3>{title}</h3>
                 <p className="productCard--body_price">${String(price)}</p>
                 <AddToCartForm product={product}>
-                    <Button type="submit" size="s" variant="success">
+                    <Button
+                        type="submit"
+                        size="s"
+                        variant="success"
+                        borderRadius="rounded"
+                    >
                         {' '}
                         Add to Cart{' '}
                     </Button>

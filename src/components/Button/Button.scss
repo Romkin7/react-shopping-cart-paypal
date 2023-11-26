@@ -56,4 +56,17 @@
             background-color: #e41a21;
         }
     }
+
+    &--rounded {
+        border-radius: 2rem;
+    }
+
+    &--rounded-left {
+        border-bottom-left-radius: 2rem;
+        border-top-left-radius: 2rem;
+    }
+
+    &---none {
+        border-radius: none;
+    }
 }
