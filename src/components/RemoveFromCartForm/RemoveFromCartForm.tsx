@@ -24,7 +24,7 @@ const RemoveFromCartForm: FC<IRemoveFromCartFormProps> = ({ id, title }) => {
     };
     return (
         <form onSubmit={submitHandler}>
-            <Button type="submit" size="s" variant="danger">
+            <Button type="submit" size="s" variant="danger" borderRadius="none">
                 <Icon
                     size="md"
                     color="light"

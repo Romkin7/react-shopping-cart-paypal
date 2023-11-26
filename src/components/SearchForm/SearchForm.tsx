@@ -41,7 +41,12 @@ const SearchForm: FC = () => {
                 value={searchInput}
                 id="search"
             />
-            <Button size="s" variant="primary" type="submit">
+            <Button
+                size="s"
+                variant="primary"
+                type="submit"
+                borderRadius="rounded"
+            >
                 Search
             </Button>
         </form>

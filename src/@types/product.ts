@@ -42,12 +42,12 @@ export interface IBaseProduct {
     brand: Brands;
     category: Categories;
     thumbnail: string;
+    stock: number;
 }
 
 interface IProduct extends IBaseProduct {
     discountPercentage: number;
     rating: number;
-    stock: number;
     images: string[];
 }
 
