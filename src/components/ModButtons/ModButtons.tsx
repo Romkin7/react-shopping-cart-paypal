@@ -1,13 +1,12 @@
 import { FC, MouseEvent } from 'react';
-import ICartItem from '../../@types/cartItem';
-import { useSelector } from 'react-redux';
+import Icon from '../Icon/Icon';
+import Button from '../Button/Button';
+import RemoveFromCartForm from '../RemoveFromCartForm/RemoveFromCartForm';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store/store';
-import { useDispatch } from 'react-redux';
 import Cart from '../../models/cart';
 import clsx from 'clsx';
-import Button from '../Button/Button';
-import Icon from '../Icon/Icon';
-import RemoveFromCartForm from '../RemoveFromCartForm/RemoveFromCartForm';
+import ICartItem from '../../@types/cartItem';
 import { setCart } from '../../store/actions/cartActions';
 import './ModButtons.scss';
 
@@ -21,7 +20,7 @@ const ModButtons: FC<ModButtonProps> = ({ item }) => {
     const cartFromState = useSelector((state: AppState) => state.cart);
     const dispatch = useDispatch();
     const cart = new Cart(cartFromState);
-    const { id, stock, title } = item;
+    const { id, title, stock } = item;
     const handleChange = (
         event: MouseEvent<HTMLButtonElement>,
         action: ModButtonAction,
@@ -38,7 +37,6 @@ const ModButtons: FC<ModButtonProps> = ({ item }) => {
             dispatch(setCart(cart));
         }
     };
-
     const modButtonStyles = clsx({
         ['modButtons']: true,
     });
@@ -46,9 +44,9 @@ const ModButtons: FC<ModButtonProps> = ({ item }) => {
         <nav className={modButtonStyles}>
             <Button
                 type="button"
-                size={'s'}
-                variant="primary"
-                borderRadius="none"
+                size="s"
+                variant="warning"
+                borderRadius="rounded-left"
                 onClick={(event: MouseEvent<HTMLButtonElement>) =>
                     handleChange(event, 'decrement')
                 }
@@ -66,9 +64,7 @@ const ModButtons: FC<ModButtonProps> = ({ item }) => {
                     </svg>
                 </Icon>
             </Button>
-
             <RemoveFromCartForm id={id} title={title} />
-
             <Button
                 type="button"
                 size="s"

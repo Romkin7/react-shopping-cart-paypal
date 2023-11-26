@@ -28,10 +28,7 @@ const CartPage: FC = () => {
                                 } $${cartItem.getItemsTotalPrice()} ${
                                     cartItem.quantity
                                 }pieces`}</p>
-                                <RemoveFromCartForm
-                                    id={cartItem.id}
-                                    title={cartItem.title}
-                                />
+
                                 <ModButtons item={cartItem} />
                             </li>
                         );
