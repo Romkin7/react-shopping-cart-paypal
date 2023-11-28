@@ -15,6 +15,7 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "@paypal/react-paypal-js": "^8.1.3",
         "clsx": "^2.0.0",
         "react": "18.2.0",
         "react-dom": "18.2.0",
@@ -23,12 +24,14 @@
         "redux": "4.2.1",
         "redux-devtools-extension": "2.13.9",
         "redux-thunk": "2.4.2",
-        "sass": "^1.69.5"
+        "sass": "^1.69.5",
+        "uuid": "^9.0.1"
     },
     "devDependencies": {
         "@types/react": "18.2.15",
         "@types/react-dom": "18.2.7",
         "@types/react-redux": "7.1.30",
+        "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "6.0.0",
         "@typescript-eslint/parser": "6.0.0",
         "@vitejs/plugin-react": "4.0.3",

@@ -1,13 +1,19 @@
 import ICart from '../@types/cart';
 import ICartItem from '../@types/cartItem';
+import ICustomer from '../@types/customer';
 import IProduct from '../@types/product';
+import testCustomer from '../data/testCustomer';
 import CartItem from './cartItem';
 
 class Cart implements ICart {
     items: Record<string, ICartItem>;
+    customer: ICustomer;
+    cartId: string;
 
     constructor(cart: ICart) {
         this.items = cart.items || {};
+        this.cartId = cart.cartId || '';
+        this.customer = cart.customer || testCustomer;
     }
 
     itemsToArray() {
