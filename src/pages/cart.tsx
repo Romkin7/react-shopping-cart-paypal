@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store/store';
 import ICartItem from '../@types/cartItem';
-import Button from '../components/Button/Button';
 import Cart from '../models/cart';
 import CartItem from '../models/cartItem';
 import ModButtons from '../components/ModButtons/ModButtons';
+import PayPalScriptProviderWrapper from '../components/PaypalCheckout/PayPalScriptProviderWrapper';
 
 const CartPage: FC = () => {
     const cartFromState = useSelector((state: AppState) => state.cart);
@@ -35,14 +35,7 @@ const CartPage: FC = () => {
                         <h4>{`total price: $${cart.getTotalPrice()}`}</h4>
                     </li>
                 </ul>
-                <Button
-                    variant="success"
-                    size="s"
-                    type="button"
-                    borderRadius="rounded"
-                >
-                    Buy
-                </Button>
+                <PayPalScriptProviderWrapper />
             </div>
         </section>
     );
