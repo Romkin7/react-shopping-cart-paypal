@@ -36,7 +36,7 @@ export class PayPalPurchaseUnit implements PurchaseUnit {
                     currency_code: 'EUR',
                 },
                 tax_total: {
-                    value: String(0),
+                    value: String(cartInstanse.getTotalTaxAmount()),
                     currency_code: 'EUR',
                 },
                 shipping: {
@@ -46,7 +46,7 @@ export class PayPalPurchaseUnit implements PurchaseUnit {
             },
         };
         this.payee = {
-            email_address: '',
+            email_address: 'devdesign@devdesign.fi',
         };
         (this.shipping = {
             name: {
@@ -69,7 +69,7 @@ export class PayPalPurchaseUnit implements PurchaseUnit {
                 .itemsToArray()
                 .map((item: ICartItem) => new PayPalCartItem(item)));
 
-        this.description = `Order of ${cartInstanse.getTotalQuantity()} products with total price of ${cartInstanse.getTotalPrice()} €`;
-        this.reference_id = `Paypal-cart-order-id: ${cart.cartId}`;
+        this.description = `Order of ${cartInstanse.getTotalQuantity()} products with total price of $${cartInstanse.getTotalPrice()}`;
+        this.reference_id = `DevDesign-CO-order-id: ${cart.cartId}`;
     }
 }
