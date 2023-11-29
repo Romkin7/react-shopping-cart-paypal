@@ -17,6 +17,6 @@ export class PayPalCart implements CreateOrderRequestBody {
     constructor(cart: ICart) {
         this.intent = 'CAPTURE';
         this.purchase_units = [new PayPalPurchaseUnit(cart)];
-        this.application_context = { brand_name: 'PayPal cart' };
+        this.application_context = { brand_name: 'DevDesign CO' };
     }
 }

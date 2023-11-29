@@ -6,8 +6,9 @@ import { PayPalCart } from '../../models/payPalCart/payPalCart';
  * @param {ICart} cart
  * @returns {Promise<string>}
  */
-function createOrder(cart: ICart): Promise<string> {
+async function createOrder(cart: ICart): Promise<string> {
     const payPalCart = new PayPalCart(cart);
+    console.dir(payPalCart);
     return fetch('/my-server/create-paypal-order', {
         method: 'POST',
         headers: {
