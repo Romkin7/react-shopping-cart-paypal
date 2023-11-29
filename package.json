@@ -3,6 +3,6 @@
     "version" : "1.0.0",
     "description": "React + Vite - Paypal Checkout with Node Backend ",
     "scripts" : {
-        "lint" : ""
+        "lint" : "(cd frontend && npm run lint)"
     }
 }
