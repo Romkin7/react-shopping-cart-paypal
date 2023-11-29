@@ -4,8 +4,14 @@ import CartActionTypes, {
     SET_CART,
 } from '../actions/actionTypes/cartActionTypes';
 import Cart from '../../models/cart';
+import testCustomer from '../../data/testCustomer';
+import { v4 } from 'uuid';
 
-const DEFAULT_STATE: ICart = new Cart({ items: {} });
+const DEFAULT_STATE: ICart = new Cart({
+    items: {},
+    cartId: v4(),
+    customer: testCustomer,
+});
 const cartReducer = (state = DEFAULT_STATE, action: CartActionTypes) => {
     switch (action.type) {
         case SET_CART:
