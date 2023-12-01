@@ -10,8 +10,8 @@ app.set('ip', process.env.IP);
 // Start express server.
 app.listen(app.get('port'), app.get('ip'), () => {
     console.log(
-        `React Shopping cart with PayPal checkout is running on PORT: ${app.get('port')} and IP: ${app.get(
-            'ip',
-        )}...`,
+        `React Shopping cart with PayPal checkout is running on PORT: ${app.get(
+            'port',
+        )} and IP: ${app.get('ip')}...`,
     );
 });

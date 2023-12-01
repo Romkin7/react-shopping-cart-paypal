@@ -9,7 +9,7 @@ import { PayPalCart } from '../../models/payPalCart/payPalCart';
 async function createOrder(cart: ICart): Promise<string> {
     const payPalCart = new PayPalCart(cart);
     console.dir(payPalCart);
-    return fetch('/my-server/create-paypal-order', {
+    return fetch('http://localhost:8080/paypal/create-order', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ async function createOrder(cart: ICart): Promise<string> {
         body: JSON.stringify(payPalCart),
     })
         .then((response) => response.json())
-        .then((order) => order.id);
+        .then((data: { orderId: string }) => data.orderId);
 }
 
 export default createOrder;

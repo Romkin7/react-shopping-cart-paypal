@@ -6,8 +6,8 @@ function decimalToInteger(price: number, decimalPlaces: number): number {
         String(price).charAt(String(price).length - 1) === '0'
             ? true
             : String(price).split('.').join('').length < 4
-            ? true
-            : false;
+              ? true
+              : false;
     const re = new RegExp('^-?\\d+(?:.\\d{0,' + (decimalPlaces || -1) + '})?');
     const rounded = (price.toString().match(re) as string[])[0];
     const toString = addZero

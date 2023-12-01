@@ -1,9 +1,17 @@
 {
-    "name" : "paypal-cart",
-    "version" : "1.0.0",
+    "name": "paypal-cart",
+    "version": "1.0.0",
     "description": "React + Vite - Paypal Checkout with Node Backend ",
-    "scripts" : {
-        "lint" : "(cd frontend && npm run lint)",
-        "dev" : "(cd frontend && npm run dev)"
+    "scripts": {
+        "lint": "(cd backend && npm run lint) && (cd frontend && npm run lint)",
+        "dev": "(cd backend && npm run dev) & (cd frontend && npm run dev)",
+        "install": "(cd frontend && npm install) && (cd backend && npm install)",
+        "prepare": "husky install",
+        "prettier:test": "prettier --check \"{backend,frontend}/**/*.ts*\"",
+        "prettier:fix": "prettier --write \"{backend,frontend}/**/*.ts*\""
+    },
+    "devDependencies": {
+        "husky": "^8.0.3",
+        "prettier": "^3.1.0"
     }
 }

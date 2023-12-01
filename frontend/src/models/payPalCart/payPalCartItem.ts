@@ -20,11 +20,11 @@ export class PayPalCartItem implements PurchaseItem {
         this.quantity = String(cartItem.quantity);
         this.unit_amount = {
             value: String(cartItem.price),
-            currency_code: 'EUR',
+            currency_code: 'USD',
         };
         this.tax = {
             value: String(cartItem.getValueAddedTax()),
-            currency_code: 'EUR',
+            currency_code: 'USD',
         };
         this.description = cartItem.description;
         this.category = 'PHYSICAL_GOODS';
