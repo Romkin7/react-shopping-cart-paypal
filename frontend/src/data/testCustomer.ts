@@ -4,7 +4,7 @@ const testCustomer: ICustomer = {
     firstName: 'John',
     lastName: 'Doe',
     email: 'devdesign@devdesign.fi',
-    mobileNumber: '+3580504919485',
+    mobileNumber: '0504919485',
     address: {
         street: 'Helsinginkatu 26',
         zipCode: '00530',

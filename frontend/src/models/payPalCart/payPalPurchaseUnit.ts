@@ -28,20 +28,22 @@ export class PayPalPurchaseUnit implements PurchaseUnit {
     constructor(cart: ICart) {
         const cartInstanse = new Cart(cart);
         this.amount = {
-            value: String(cartInstanse.getTotalPrice()),
-            currency_code: 'EUR',
+            value: String(
+                cartInstanse.getTotalPrice() + cartInstanse.getTotalTaxAmount(),
+            ),
+            currency_code: 'USD',
             breakdown: {
                 item_total: {
                     value: String(cartInstanse.getTotalPrice()),
-                    currency_code: 'EUR',
+                    currency_code: 'USD',
                 },
                 tax_total: {
                     value: String(cartInstanse.getTotalTaxAmount()),
-                    currency_code: 'EUR',
+                    currency_code: 'USD',
                 },
                 shipping: {
                     value: String(0),
-                    currency_code: 'EUR',
+                    currency_code: 'USD',
                 },
             },
         };
