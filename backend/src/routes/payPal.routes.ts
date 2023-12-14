@@ -7,7 +7,6 @@ router.post('/paypal/create-order', async (req: Request, res: Response) => {
     try {
         const paypalCart = req.body;
         const accessToken = await generateAccessToken();
-        console.log(accessToken);
         const resp = await fetch(
             `${process.env.PAYPAL_URI}/v2/checkout/orders`,
             {
@@ -20,7 +19,6 @@ router.post('/paypal/create-order', async (req: Request, res: Response) => {
             },
         );
         const response = await resp.json();
-        console.log(response);
         return res.status(201).json({ orderId: response.id });
     } catch (error) {
         console.log(error.message, error);
@@ -28,10 +26,48 @@ router.post('/paypal/create-order', async (req: Request, res: Response) => {
     }
 });
 
+router.get(
+    '/paypal/get-order/:orderId',
+    async (req: Request, res: Response) => {
+        try {
+            const orderId = req.params.orderId;
+            const accessToken = await generateAccessToken();
+            const resp = await fetch(
+                `${process.env.PAYPAL_URI}/v2/checkout/orders/${orderId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    method: 'GET',
+                },
+            );
+            const response = await resp.json();
+            return res.status(201).json({ order: response });
+        } catch (error) {
+            console.log(error.message, error);
+            return res.status(500).json({ message: JSON.stringify(error) });
+        }
+    },
+);
+
 router.post(
     '/paypal/capture-order/:orderId',
     async (req: Request, res: Response) => {
         try {
+            const orderId = req.params.orderId;
+            const accessToken = await generateAccessToken();
+            const resp = await fetch(
+                `${process.env.PAYPAL_URI}/v2/checkout/orders/${orderId}/capture`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    method: 'POST',
+                },
+            );
+            const response = await resp.json();
+            return res.status(201).json({ order: response });
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
