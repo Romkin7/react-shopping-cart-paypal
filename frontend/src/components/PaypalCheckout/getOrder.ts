@@ -1,9 +1,11 @@
+import IOrder from '../../@types/payPalOrder/order';
+
 /**
  * getOrder function
  * @param {string} orderId
- * @returns {Promise<unknown>}
+ * @returns {Promise<IOrder>}
  */
-async function getOrder(orderId: string): Promise<unknown> {
+async function getOrder(orderId: string): Promise<IOrder> {
     return fetch(`http://localhost:8080/paypal/get-order/${orderId}`, {
         method: 'GET',
     })
