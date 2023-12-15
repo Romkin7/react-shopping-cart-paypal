@@ -1,15 +1,15 @@
 import {
     AmountWithBreakdown,
-    Payee,
     Payments,
     PurchaseItem,
     ShippingInfo,
 } from '@paypal/paypal-js/types/apis/orders';
+import IPayee from './payee';
 
 interface IPurchaseUnit {
     reference_id: string;
     amount: AmountWithBreakdown;
-    payee: Payee;
+    payee: IPayee;
     description: string;
     items: PurchaseItem[];
     shipping: ShippingInfo;
