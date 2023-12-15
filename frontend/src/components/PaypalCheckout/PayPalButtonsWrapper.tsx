@@ -3,7 +3,7 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import createOrder from './createOrder';
 import { AppState } from '../../store/store';
 import { useSelector } from 'react-redux';
-import captureOrder from './capture.Order';
+import captureOrder from './captureOrder';
 import { useNavigate } from 'react-router-dom';
 
 interface OnApproveData {
