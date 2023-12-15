@@ -4,6 +4,7 @@ import ProductsPage from './pages/products';
 import CartPage from './pages/cart';
 import Navbar from './components/Navbar/Navbar';
 import './App.scss';
+import OrderConfirmationPage from './pages/orderConfirmation';
 
 const App: FC = () => {
     return (
@@ -12,7 +13,11 @@ const App: FC = () => {
             <main className="mt-5">
                 <Routes>
                     <Route path="/" index={true} element={<ProductsPage />} />
-                    <Route path="/cart" index={true} element={<CartPage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route
+                        path="/order-confirmation/:orderId"
+                        element={<OrderConfirmationPage />}
+                    />
                 </Routes>
             </main>
         </BrowserRouter>
