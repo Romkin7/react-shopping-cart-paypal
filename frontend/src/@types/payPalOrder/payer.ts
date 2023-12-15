@@ -10,6 +10,11 @@ interface IPayer {
     address: {
         country_code: CountryCodes;
     };
+    phone: {
+        phone_number: {
+            national_number: string;
+        };
+    }
 }
 
 export default IPayer;
