@@ -3,6 +3,9 @@ import { config } from 'dotenv';
 config();
 
 import app from './app';
+import connectToMongoDB from './config/connectToMongoDB';
+
+connectToMongoDB();
 
 // Set PORT and IP
 app.set('port', process.env.PORT);

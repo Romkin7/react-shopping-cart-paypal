@@ -14,7 +14,7 @@ interface IPayer {
         phone_number: {
             national_number: string;
         };
-    }
+    };
 }
 
 export default IPayer;
