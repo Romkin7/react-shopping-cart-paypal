@@ -42,7 +42,7 @@ router.get(
                 },
             );
             const response = await resp.json();
-            return res.status(201).json({ order: response });
+            return res.status(200).json({ order: response });
         } catch (error) {
             console.log(error.message, error);
             return res.status(500).json({ message: JSON.stringify(error) });
@@ -67,7 +67,7 @@ router.post(
                 },
             );
             const response = await resp.json();
-            return res.status(201).json({ order: response });
+            return res.status(200).json({ order: response });
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
