@@ -1,6 +1,19 @@
-import { Schema, model, CallbackWithoutResultAndOptionalError } from 'mongoose';
+import {
+    Schema,
+    model,
+    CallbackWithoutResultAndOptionalError,
+    Document,
+    ObjectId,
+} from 'mongoose';
 import ErrorMessages from '../errors/errorMessages';
-import { genSalt, hash } from 'bcrypt';
+import { compareSync, genSalt, hash } from 'bcrypt';
+
+interface UserDocument extends Document {
+    email: string;
+    password: string;
+    roles: ObjectId[];
+    history: string[];
+}
 
 const UserSchema = new Schema(
     {
@@ -14,7 +27,7 @@ const UserSchema = new Schema(
 
 UserSchema.pre(
     'save',
-    function (this, next: CallbackWithoutResultAndOptionalError) {
+    function (this: UserDocument, next: CallbackWithoutResultAndOptionalError) {
         const user = this;
         // Check if user hasn't modified password, return next.
         if (!user.isModified('password')) return next();
@@ -35,6 +48,19 @@ UserSchema.pre(
     },
 );
 
-const User = model('User', UserSchema);
+/**
+ * Defines method, that compares candidate password with user password,
+ * that is stored in the database.
+ * */
+UserSchema.methods.comparePasswords = function (
+    this: UserDocument,
+    password: string,
+) {
+    return compareSync(password, this.password);
+};
+
+/** Set indexes */
+UserSchema.index({ email: 1 }, { unique: true });
+const User = model<UserDocument>('User', UserSchema);
 
 export default User;
