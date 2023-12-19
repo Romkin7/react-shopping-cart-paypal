@@ -1,8 +1,12 @@
 import { Router, Request, Response } from 'express';
-import User from '../models/users.model';
+import User, { UserDocument } from '../models/users.model';
 import Role from '../models/roles.model';
+import Token from '../models/tokens.model';
 import { ObjectId } from 'mongoose';
+import mongoDBIdToString from '../utils/mongoDBIdToString';
 import ErrorMessages from '../errors/errorMessages';
+import { ILoggedInUser } from '../@types/user';
+import IRole from '../@types/role';
 
 const router = Router();
 
@@ -27,13 +31,15 @@ router.post('/auth/signup', async (req: Request, res: Response) => {
 router.post('/auth/login', async (req: Request, res: Response) => {
     try {
         // Tries to find the user matching the given username
-        const user = await User.findOne({ email: request.body.email });
+        const user = (await User.findOne({
+            email: req.body.email,
+        }).populate('roles')) as UserDocument;
         if (!user) {
-            return response
+            return res
                 .status(401)
-                .json({ message: errorMessages.wrongUsernameOrPassword });
+                .json({ message: ErrorMessages.wrongUsernameOrPassword });
             // Check if the password is valid
-        } else if (user && user.comparePasswords(request.body.password)) {
+        } else if (user && user.comparePasswords(req.body.password)) {
             const uiUser = user.getExportableUser();
             const refreshToken = user.generateRefreshToken();
             const accessToken = user.generateAccessToken();
@@ -53,21 +59,24 @@ router.post('/auth/login', async (req: Request, res: Response) => {
             }
             const loggedInUser: ILoggedInUser = {
                 user: uiUser,
-                isAdmin: user.role === 'admin' ? true : false,
+                isAdmin:
+                    (user.roles as unknown as IRole[]).filter((role: IRole) =>
+                        /admin|superAdmin/.test(role.type),
+                    ).length > 0
+                        ? true
+                        : false,
                 isAuthenticated: true,
             };
-            return response.status(200).json({ loggedInUser, accessToken });
+            return res.status(200).json({ loggedInUser, accessToken });
         } else {
             // Throws an error if credentials are not valid
-            return response
+            return res
                 .status(401)
-                .json({ message: errorMessages.wrongUsernameOrPassword });
+                .json({ message: ErrorMessages.wrongUsernameOrPassword });
         }
     } catch (error) {
-        log(error);
-        return response
-            .status(500)
-            .json({ message: errorMessages.serverError });
+        console.log(error);
+        return res.status(500).json({ message: ErrorMessages.serverError });
     }
 });
 
