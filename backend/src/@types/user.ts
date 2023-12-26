@@ -16,6 +16,7 @@ export interface IBaseLoggedInUser extends BaseUser {
 export interface ILoggedInUser {
     user: IBaseLoggedInUser;
     isAdmin: boolean;
+    isSuperAdmin: boolean;
     isAuthenticated: boolean;
 }
 

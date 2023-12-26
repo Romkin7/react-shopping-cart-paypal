@@ -11,6 +11,7 @@ import IUser, { IBaseLoggedInUser } from '../@types/user';
 import { sign } from 'jsonwebtoken';
 import mongoDBIdToString from '../utils/mongoDBIdToString';
 import { setAccessTokenExpiry, setRefreshTokenExpiry } from '../utils/auth';
+import IRole from '../@types/role';
 
 export interface UserDocument extends Document {
     email: string;
@@ -47,7 +48,19 @@ UserSchema.methods.generateAccessToken = function (this: UserDocument): string {
     const user = this;
     const expires = setAccessTokenExpiry();
     const token = sign(
-        { _id: mongoDBIdToString(user._id), user: user.getExportableUser() },
+        {
+            _id: mongoDBIdToString(user._id),
+            signedInUser: {
+                user: user.getExportableUser(),
+                isAdmin: !!(user.roles as unknown as IRole[]).find(
+                    (role: IRole) => role.type === 'admin',
+                ),
+                isSuperAdmin: !!(user.roles as unknown as IRole[]).find(
+                    (role: IRole) => role.type === 'superAdmin',
+                ),
+                isAuthenticated: true,
+            },
+        },
         process.env.JWT_TOKEN_SECRET,
         { expiresIn: expires },
     );

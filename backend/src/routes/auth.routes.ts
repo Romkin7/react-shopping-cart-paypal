@@ -30,6 +30,7 @@ router.post('/auth/signup', async (req: Request, res: Response) => {
 
 router.post('/auth/login', async (req: Request, res: Response) => {
     try {
+        console.log(req.body);
         // Tries to find the user matching the given username
         const user = (await User.findOne({
             email: req.body.email,
