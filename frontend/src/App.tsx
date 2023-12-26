@@ -5,6 +5,7 @@ import CartPage from './pages/cart';
 import Navbar from './components/Navbar/Navbar';
 import './App.scss';
 import OrderConfirmationPage from './pages/orderConfirmation';
+import LoginPage from './pages/login';
 
 const App: FC = () => {
     return (
@@ -18,6 +19,7 @@ const App: FC = () => {
                         path="/order-confirmation/:orderId"
                         element={<OrderConfirmationPage />}
                     />
+                    <Route path="/login" element={<LoginPage />} />
                 </Routes>
             </main>
         </BrowserRouter>
