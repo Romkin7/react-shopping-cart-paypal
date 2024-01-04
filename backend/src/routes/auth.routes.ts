@@ -62,7 +62,13 @@ router.post('/auth/login', async (req: Request, res: Response) => {
                 user: uiUser,
                 isAdmin:
                     (user.roles as unknown as IRole[]).filter((role: IRole) =>
-                        /admin|superAdmin/.test(role.type),
+                        /admin/.test(role.type),
+                    ).length > 0
+                        ? true
+                        : false,
+                isSuperAdmin:
+                    (user.roles as unknown as IRole[]).filter((role: IRole) =>
+                        /superAdmin/.test(role.type),
                     ).length > 0
                         ? true
                         : false,
