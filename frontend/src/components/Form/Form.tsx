@@ -1,7 +1,7 @@
 import { FC, FormEvent, PropsWithChildren } from 'react';
 
 interface IFormProps {
-    method: 'get' | 'post';
+    method: 'GET' | 'POST';
     action: string;
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }

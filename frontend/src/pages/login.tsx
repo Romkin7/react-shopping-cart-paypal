@@ -2,17 +2,14 @@ import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import Form from '../components/Form/Form';
 import TextInput from '../components/TextInput/TextInput';
 import Button from '../components/Button/Button';
-
-interface LoginPageState {
-    email: string;
-    password: string;
-}
+import ILoginBody from '../@types/loginBody';
+import login from './api/login';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
  * @returns {LoginPageState}
  */
-function resetLoginPageState(): LoginPageState {
+function resetLoginPageState(): ILoginBody {
     return {
         email: '',
         password: '',
@@ -20,11 +17,12 @@ function resetLoginPageState(): LoginPageState {
 }
 
 const LoginPage: FC = () => {
-    const [loginPageState, setLoginPageState] = useState<LoginPageState>(() =>
+    const [loginPageState, setLoginPageState] = useState<ILoginBody>(() =>
         resetLoginPageState(),
     );
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
+        console.log(event.target)
         setLoginPageState({
             ...loginPageState,
             [event.target.name]: event.target.value,
@@ -32,6 +30,16 @@ const LoginPage: FC = () => {
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const formData = new FormData(event.target as HTMLFormElement);
+        console.dir(formData);
+        login(
+            (event.target as HTMLFormElement).action,
+            (event.target as HTMLFormElement).method,
+            {
+                email: formData.get('email') as string,
+                password: formData.get('password') as string,
+            },
+        );
         console.log(event);
     };
     return (
@@ -41,8 +49,8 @@ const LoginPage: FC = () => {
                     <div className="col-4 py-5">
                         <h1>Login</h1>
                         <Form
-                            method="post"
-                            action="http://localhost:8080/login"
+                            method="POST"
+                            action="http://localhost:8080/auth/login"
                             handleSubmit={handleSubmit}
                         >
                             <div className="row">

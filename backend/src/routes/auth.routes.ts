@@ -30,6 +30,7 @@ router.post('/auth/signup', async (req: Request, res: Response) => {
 
 router.post('/auth/login', async (req: Request, res: Response) => {
     try {
+        console.log(req.body);
         // Tries to find the user matching the given username
         const user = (await User.findOne({
             email: req.body.email,
@@ -61,7 +62,13 @@ router.post('/auth/login', async (req: Request, res: Response) => {
                 user: uiUser,
                 isAdmin:
                     (user.roles as unknown as IRole[]).filter((role: IRole) =>
-                        /admin|superAdmin/.test(role.type),
+                         /admin/.test(role.type),
+                    ).length > 0
+                        ? true
+                        : false,
+                isSuperAdmin:
+                    (user.roles as unknown as IRole[]).filter((role: IRole) =>
+                        /superAdmin/.test(role.type),
                     ).length > 0
                         ? true
                         : false,
