@@ -4,6 +4,9 @@ import TextInput from '../components/TextInput/TextInput';
 import Button from '../components/Button/Button';
 import ILoginBody from '../@types/loginBody';
 import login from './api/login';
+import FlashMessage from '../components/FlashMessage/FlashMessage';
+import IFlashMessage from '../@types/flashMessage';
+import { jwtDecode } from 'jwt-decode';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
@@ -20,9 +23,12 @@ const LoginPage: FC = () => {
     const [loginPageState, setLoginPageState] = useState<ILoginBody>(() =>
         resetLoginPageState(),
     );
+    const [flashMessage, setFlashMessage] = useState<IFlashMessage | null>(
+        () => null,
+    );
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
-        console.log(event.target)
         setLoginPageState({
             ...loginPageState,
             [event.target.name]: event.target.value,
@@ -30,8 +36,8 @@ const LoginPage: FC = () => {
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setFlashMessage(null);
         const formData = new FormData(event.target as HTMLFormElement);
-        console.dir(formData);
         login(
             (event.target as HTMLFormElement).action,
             (event.target as HTMLFormElement).method,
@@ -39,9 +45,18 @@ const LoginPage: FC = () => {
                 email: formData.get('email') as string,
                 password: formData.get('password') as string,
             },
-        );
-        console.log(event);
+        )
+            .then((data) => {
+                setFlashMessage({ variant: 'success', text: data.message });
+                window.localStorage.setItem('accessToken', data.accessToken);
+                const decodedToken = jwtDecode(data.accessToken);
+                console.log(decodedToken);
+            })
+            .catch((error) => {
+                setFlashMessage({ variant: 'danger', text: error.message });
+            });
     };
+
     return (
         <section>
             <div className="container my-5">
@@ -89,6 +104,13 @@ const LoginPage: FC = () => {
                                     >
                                         Login
                                     </Button>
+                                    {flashMessage && (
+                                        <FlashMessage
+                                            variant={flashMessage.variant}
+                                        >
+                                            {flashMessage.text}
+                                        </FlashMessage>
+                                    )}
                                 </div>
                             </div>
                         </Form>

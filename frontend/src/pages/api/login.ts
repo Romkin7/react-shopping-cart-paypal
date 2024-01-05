@@ -8,13 +8,21 @@ async function login(url: string, method: string, body: ILoginBody) {
         },
         body: JSON.stringify(body),
     })
-        .then((response) => {
-            return response.json();
+        .then(async (response) => {
+            if (!response.ok) {
+                throw response;
+            }
+            return await response.json();
         })
         .then((data) => {
+            console.log('we got data');
             return data;
         })
-        .catch((error) => console.error('Error ', error));
+        .catch(async (error) => {
+            console.log('we got an error');
+            const errorResponse = await error.json();
+            throw errorResponse;
+        });
 }
 
 export default login;

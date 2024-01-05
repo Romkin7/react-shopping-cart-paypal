@@ -48,16 +48,6 @@ UserSchema.methods.generateAccessToken = function (this: UserDocument): string {
     const user = this;
     const expires = setAccessTokenExpiry();
     const token = sign(
-        { _id: mongoDBIdToString(user._id), user: user.getExportableUser() },
-        process.env.JWT_TOKEN_SECRET,
-        { expiresIn: expires },
-    );
-    return token;
-};
-UserSchema.methods.generateRefreshToken = function (this: IUser): string {
-    const user = this;
-    const expiry = setRefreshTokenExpiry();
-    const refreshToken = sign(
         {
             _id: mongoDBIdToString(user._id),
             signedInUser: {
@@ -70,6 +60,19 @@ UserSchema.methods.generateRefreshToken = function (this: IUser): string {
                 ),
                 isAuthenticated: true,
             },
+        },
+        process.env.JWT_TOKEN_SECRET,
+        { expiresIn: expires },
+    );
+    return token;
+};
+UserSchema.methods.generateRefreshToken = function (this: IUser): string {
+    const user = this;
+    const expiry = setRefreshTokenExpiry();
+    const refreshToken = sign(
+        {
+            _id: mongoDBIdToString(user._id),
+            user: user.getExportableUser(),
         },
         process.env.JWT_REFRESH_TOKEN_SECRET,
         {
