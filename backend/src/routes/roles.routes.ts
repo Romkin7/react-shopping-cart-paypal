@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import Role from '../models/roles.model';
-import ErrorMessages from '../errors/errorMessages';
+import ErrorMessages from '../messages/errorMessages';
 
 const router = Router();
 

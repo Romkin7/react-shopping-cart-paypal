@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppState } from '../../store/store';
 import Cart from '../../models/cart';
 import SearchForm from '../SearchForm/SearchForm';
+import Logout from '../Logout/Logout';
 
 const Navbar: FC = () => {
     const cartFromState = useSelector((state: AppState) => state.cart);
@@ -70,9 +71,12 @@ const Navbar: FC = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/logout">
-                                            Logout
-                                        </Link>
+                                        <Logout
+                                            _id={
+                                                loggedInUser?.user
+                                                    ?._id as string
+                                            }
+                                        />
                                     </li>
                                 </>
                             )}

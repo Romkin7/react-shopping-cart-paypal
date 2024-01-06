@@ -5,7 +5,7 @@ import {
     Document,
     ObjectId,
 } from 'mongoose';
-import ErrorMessages from '../errors/errorMessages';
+import ErrorMessages from '../messages/errorMessages';
 import { compareSync, genSalt, hash } from 'bcrypt';
 import IUser, { IBaseLoggedInUser } from '../@types/user';
 import { sign } from 'jsonwebtoken';

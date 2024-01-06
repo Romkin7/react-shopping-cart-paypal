@@ -3,7 +3,6 @@ import Form from '../components/Form/Form';
 import TextInput from '../components/TextInput/TextInput';
 import Button from '../components/Button/Button';
 import ILoginBody from '../@types/loginBody';
-import login from './api/login';
 import FlashMessage from '../components/FlashMessage/FlashMessage';
 import IFlashMessage from '../@types/flashMessage';
 import { jwtDecode } from 'jwt-decode';
@@ -12,6 +11,7 @@ import { setLoggedInUser } from '../store/actions/loggedInUserActions';
 import DecodedToken from '../@types/decodedToken';
 import { Navigate } from 'react-router-dom';
 import { AppState } from '../store/store';
+import request from './api/request';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
@@ -44,7 +44,7 @@ const LoginPage: FC = () => {
         event.preventDefault();
         setFlashMessage(null);
         const formData = new FormData(event.target as HTMLFormElement);
-        login(
+        request(
             (event.target as HTMLFormElement).action,
             (event.target as HTMLFormElement).method,
             {

@@ -4,9 +4,9 @@ import Role from '../models/roles.model';
 import Token from '../models/tokens.model';
 import { ObjectId } from 'mongoose';
 import mongoDBIdToString from '../utils/mongoDBIdToString';
-import ErrorMessages from '../errors/errorMessages';
-import { ILoggedInUser } from '../@types/user';
-import IRole from '../@types/role';
+import ErrorMessages from '../messages/errorMessages';
+import errorMessages from '../messages/errorMessages';
+import successMessages from '../messages/successMessages';
 
 const router = Router();
 
@@ -41,7 +41,6 @@ router.post('/auth/login', async (req: Request, res: Response) => {
                 .json({ message: ErrorMessages.wrongEmailOrPassword });
             // Check if the password is valid
         } else if (user && user.comparePasswords(req.body.password)) {
-            const uiUser = user.getExportableUser();
             const refreshToken = user.generateRefreshToken();
             const accessToken = user.generateAccessToken();
             const foundRefreshToken = await Token.findOne({
@@ -74,5 +73,28 @@ router.post('/auth/login', async (req: Request, res: Response) => {
         return res.status(500).json({ message: ErrorMessages.serverError });
     }
 });
+
+router.delete(
+    '/auth/:id/logout',
+    async (request: Request, response: Response) => {
+        try {
+            if (!request.params.id) {
+                return response
+                    .status(400)
+                    .json({ message: errorMessages.invalidUserId });
+            }
+            await Token.deleteOne({
+                tokenId: `refreshToken-${request.params.id}`,
+            });
+            return response
+                .status(200)
+                .json({ message: successMessages.loggedOutMessage });
+        } catch (error) {
+            return response
+                .status(500)
+                .json({ message: errorMessages.serverError });
+        }
+    },
+);
 
 export default router;
