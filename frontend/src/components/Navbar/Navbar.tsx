@@ -45,7 +45,7 @@ const Navbar: FC = () => {
                             </li>
                         </ul>
                         <SearchForm />
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav me-end mb-2 mb-lg-0">
                             {!isAuthenticated ? (
                                 <>
                                     <li className="nav-item">

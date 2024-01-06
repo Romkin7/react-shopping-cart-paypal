@@ -7,13 +7,15 @@ import login from './api/login';
 import FlashMessage from '../components/FlashMessage/FlashMessage';
 import IFlashMessage from '../@types/flashMessage';
 import { jwtDecode } from 'jwt-decode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedInUser } from '../store/actions/loggedInUserActions';
 import DecodedToken from '../@types/decodedToken';
+import { Navigate } from 'react-router-dom';
+import { AppState } from '../store/store';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
- * @returns {LoginPageState}
+ * @returns {ILoginBody}
  */
 function resetLoginPageState(): ILoginBody {
     return {
@@ -30,6 +32,7 @@ const LoginPage: FC = () => {
         () => null,
     );
     const dispatch = useDispatch();
+    const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         setLoginPageState({
@@ -62,6 +65,12 @@ const LoginPage: FC = () => {
 
     return (
         <section>
+            {loggedInUser.isAuthenticated && (
+                <Navigate
+                    to={`/profiili/${loggedInUser?.user?._id}`}
+                    replace={true}
+                />
+            )}
             <div className="container my-5">
                 <div className="row justify-content-center">
                     <div className="col-4 py-5">

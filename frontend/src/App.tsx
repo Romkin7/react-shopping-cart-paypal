@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import './App.scss';
 import OrderConfirmationPage from './pages/orderConfirmation';
 import LoginPage from './pages/login';
+import ProfilePage from './pages/profile';
 
 const App: FC = () => {
     return (
@@ -20,6 +21,7 @@ const App: FC = () => {
                         element={<OrderConfirmationPage />}
                     />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/profile/:id" element={<ProfilePage />} />
                 </Routes>
             </main>
         </BrowserRouter>
