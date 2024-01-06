@@ -7,6 +7,9 @@ import login from './api/login';
 import FlashMessage from '../components/FlashMessage/FlashMessage';
 import IFlashMessage from '../@types/flashMessage';
 import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { setLoggedInUser } from '../store/actions/loggedInUserActions';
+import DecodedToken from '../@types/decodedToken';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
@@ -26,7 +29,7 @@ const LoginPage: FC = () => {
     const [flashMessage, setFlashMessage] = useState<IFlashMessage | null>(
         () => null,
     );
-
+    const dispatch = useDispatch();
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         setLoginPageState({
@@ -49,8 +52,8 @@ const LoginPage: FC = () => {
             .then((data) => {
                 setFlashMessage({ variant: 'success', text: data.message });
                 window.localStorage.setItem('accessToken', data.accessToken);
-                const decodedToken = jwtDecode(data.accessToken);
-                console.log(decodedToken);
+                const decodedToken: DecodedToken = jwtDecode(data.accessToken);
+                dispatch(setLoggedInUser(decodedToken.loggedInUser));
             })
             .catch((error) => {
                 setFlashMessage({ variant: 'danger', text: error.message });
@@ -94,8 +97,6 @@ const LoginPage: FC = () => {
                                         labelText="Password"
                                         value={loginPageState.password}
                                     />
-                                </div>
-                                <div className="col-12">
                                     <Button
                                         type="submit"
                                         variant="success"

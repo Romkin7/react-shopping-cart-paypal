@@ -50,7 +50,7 @@ UserSchema.methods.generateAccessToken = function (this: UserDocument): string {
     const token = sign(
         {
             _id: mongoDBIdToString(user._id),
-            signedInUser: {
+            loggedInUser: {
                 user: user.getExportableUser(),
                 isAdmin: !!(user.roles as unknown as IRole[]).find(
                     (role: IRole) => role.type === 'admin',
