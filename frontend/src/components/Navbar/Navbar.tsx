@@ -64,7 +64,7 @@ const Navbar: FC = () => {
                                     <li className="nav-item">
                                         <Link
                                             className="nav-link"
-                                            to={`/${user?._id}`}
+                                            to={`/profile/${user?._id}`}
                                         >
                                             Profile
                                         </Link>

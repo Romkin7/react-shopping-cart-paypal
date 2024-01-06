@@ -67,7 +67,7 @@ const LoginPage: FC = () => {
         <section>
             {loggedInUser.isAuthenticated && (
                 <Navigate
-                    to={`/profiili/${loggedInUser?.user?._id}`}
+                    to={`/profile/${loggedInUser?.user?._id}`}
                     replace={true}
                 />
             )}
