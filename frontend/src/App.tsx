@@ -7,8 +7,12 @@ import './App.scss';
 import OrderConfirmationPage from './pages/orderConfirmation';
 import LoginPage from './pages/login';
 import ProfilePage from './pages/profile';
+import ProtectedRoute from './ProtectedRoute';
+import { useSelector } from 'react-redux';
+import { AppState } from './store/store';
 
 const App: FC = () => {
+    const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
     return (
         <BrowserRouter basename="/">
             <Navbar />
@@ -21,7 +25,15 @@ const App: FC = () => {
                         element={<OrderConfirmationPage />}
                     />
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/profile/:id" element={<ProfilePage />} />
+                    <Route
+                        element={
+                            <ProtectedRoute
+                                isAuthenticated={loggedInUser.isAuthenticated}
+                            />
+                        }
+                    >
+                        <Route path="/profile/:id" element={<ProfilePage />} />
+                    </Route>
                 </Routes>
             </main>
         </BrowserRouter>
