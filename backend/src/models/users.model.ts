@@ -5,7 +5,7 @@ import {
     Document,
     ObjectId,
 } from 'mongoose';
-import ErrorMessages from '../errors/errorMessages';
+import ErrorMessages from '../messages/errorMessages';
 import { compareSync, genSalt, hash } from 'bcrypt';
 import IUser, { IBaseLoggedInUser } from '../@types/user';
 import { sign } from 'jsonwebtoken';
@@ -48,7 +48,19 @@ UserSchema.methods.generateAccessToken = function (this: UserDocument): string {
     const user = this;
     const expires = setAccessTokenExpiry();
     const token = sign(
-        { _id: mongoDBIdToString(user._id), user: user.getExportableUser() },
+        {
+            _id: mongoDBIdToString(user._id),
+            loggedInUser: {
+                user: user.getExportableUser(),
+                isAdmin: !!(user.roles as unknown as IRole[]).find(
+                    (role: IRole) => role.type === 'admin',
+                ),
+                isSuperAdmin: !!(user.roles as unknown as IRole[]).find(
+                    (role: IRole) => role.type === 'superAdmin',
+                ),
+                isAuthenticated: true,
+            },
+        },
         process.env.JWT_TOKEN_SECRET,
         { expiresIn: expires },
     );
@@ -60,16 +72,7 @@ UserSchema.methods.generateRefreshToken = function (this: IUser): string {
     const refreshToken = sign(
         {
             _id: mongoDBIdToString(user._id),
-            signedInUser: {
-                user: user.getExportableUser(),
-                isAdmin: !!(user.roles as unknown as IRole[]).find(
-                    (role: IRole) => role.type === 'admin',
-                ),
-                isSuperAdmin: !!(user.roles as unknown as IRole[]).find(
-                    (role: IRole) => role.type === 'superAdmin',
-                ),
-                isAuthenticated: true,
-            },
+            user: user.getExportableUser(),
         },
         process.env.JWT_REFRESH_TOKEN_SECRET,
         {

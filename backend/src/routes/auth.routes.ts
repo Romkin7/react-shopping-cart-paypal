@@ -4,9 +4,9 @@ import Role from '../models/roles.model';
 import Token from '../models/tokens.model';
 import { ObjectId } from 'mongoose';
 import mongoDBIdToString from '../utils/mongoDBIdToString';
-import ErrorMessages from '../errors/errorMessages';
-import { ILoggedInUser } from '../@types/user';
-import IRole from '../@types/role';
+import ErrorMessages from '../messages/errorMessages';
+import errorMessages from '../messages/errorMessages';
+import successMessages from '../messages/successMessages';
 
 const router = Router();
 
@@ -38,10 +38,9 @@ router.post('/auth/login', async (req: Request, res: Response) => {
         if (!user) {
             return res
                 .status(401)
-                .json({ message: ErrorMessages.wrongUsernameOrPassword });
+                .json({ message: ErrorMessages.wrongEmailOrPassword });
             // Check if the password is valid
         } else if (user && user.comparePasswords(req.body.password)) {
-            const uiUser = user.getExportableUser();
             const refreshToken = user.generateRefreshToken();
             const accessToken = user.generateAccessToken();
             const foundRefreshToken = await Token.findOne({
@@ -58,33 +57,44 @@ router.post('/auth/login', async (req: Request, res: Response) => {
                 foundRefreshToken.token = refreshToken;
                 await foundRefreshToken.save();
             }
-            const loggedInUser: ILoggedInUser = {
-                user: uiUser,
-                isAdmin:
-                    (user.roles as unknown as IRole[]).filter((role: IRole) =>
-                         /admin/.test(role.type),
-                    ).length > 0
-                        ? true
-                        : false,
-                isSuperAdmin:
-                    (user.roles as unknown as IRole[]).filter((role: IRole) =>
-                        /superAdmin/.test(role.type),
-                    ).length > 0
-                        ? true
-                        : false,
-                isAuthenticated: true,
-            };
-            return res.status(200).json({ loggedInUser, accessToken });
+
+            return res.status(200).json({
+                message: 'You are now logged in successfully',
+                accessToken,
+            });
         } else {
             // Throws an error if credentials are not valid
             return res
                 .status(401)
-                .json({ message: ErrorMessages.wrongUsernameOrPassword });
+                .json({ message: ErrorMessages.wrongEmailOrPassword });
         }
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: ErrorMessages.serverError });
     }
 });
+
+router.delete(
+    '/auth/:id/logout',
+    async (request: Request, response: Response) => {
+        try {
+            if (!request.params.id) {
+                return response
+                    .status(400)
+                    .json({ message: errorMessages.invalidUserId });
+            }
+            await Token.deleteOne({
+                tokenId: `refreshToken-${request.params.id}`,
+            });
+            return response
+                .status(200)
+                .json({ message: successMessages.loggedOutMessage });
+        } catch (error) {
+            return response
+                .status(500)
+                .json({ message: errorMessages.serverError });
+        }
+    },
+);
 
 export default router;

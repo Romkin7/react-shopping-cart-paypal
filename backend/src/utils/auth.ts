@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import generatePinCode from './uniquePinCode';
 import Token from '../models/tokens.model';
-import ErrorMessages from '../errors/errorMessages';
+import ErrorMessages from '../messages/errorMessages';
 import ExtendedJwtPayload from '../@types/token';
 
 export function createPincode(): string {

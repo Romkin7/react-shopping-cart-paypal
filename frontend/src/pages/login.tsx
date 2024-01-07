@@ -3,11 +3,19 @@ import Form from '../components/Form/Form';
 import TextInput from '../components/TextInput/TextInput';
 import Button from '../components/Button/Button';
 import ILoginBody from '../@types/loginBody';
-import login from './api/login';
+import FlashMessage from '../components/FlashMessage/FlashMessage';
+import IFlashMessage from '../@types/flashMessage';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoggedInUser } from '../store/actions/loggedInUserActions';
+import DecodedToken from '../@types/decodedToken';
+import { Navigate } from 'react-router-dom';
+import { AppState } from '../store/store';
+import request from './api/request';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
- * @returns {LoginPageState}
+ * @returns {ILoginBody}
  */
 function resetLoginPageState(): ILoginBody {
     return {
@@ -20,9 +28,13 @@ const LoginPage: FC = () => {
     const [loginPageState, setLoginPageState] = useState<ILoginBody>(() =>
         resetLoginPageState(),
     );
+    const [flashMessage, setFlashMessage] = useState<IFlashMessage | null>(
+        () => null,
+    );
+    const dispatch = useDispatch();
+    const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
-        console.log(event.target)
         setLoginPageState({
             ...loginPageState,
             [event.target.name]: event.target.value,
@@ -30,20 +42,35 @@ const LoginPage: FC = () => {
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setFlashMessage(null);
         const formData = new FormData(event.target as HTMLFormElement);
-        console.dir(formData);
-        login(
+        request(
             (event.target as HTMLFormElement).action,
             (event.target as HTMLFormElement).method,
             {
                 email: formData.get('email') as string,
                 password: formData.get('password') as string,
             },
-        );
-        console.log(event);
+        )
+            .then((data) => {
+                setFlashMessage({ variant: 'success', text: data.message });
+                window.localStorage.setItem('accessToken', data.accessToken);
+                const decodedToken: DecodedToken = jwtDecode(data.accessToken);
+                dispatch(setLoggedInUser(decodedToken.loggedInUser));
+            })
+            .catch((error) => {
+                setFlashMessage({ variant: 'danger', text: error.message });
+            });
     };
+
     return (
         <section>
+            {loggedInUser.isAuthenticated && (
+                <Navigate
+                    to={`/profile/${loggedInUser?.user?._id}`}
+                    replace={true}
+                />
+            )}
             <div className="container my-5">
                 <div className="row justify-content-center">
                     <div className="col-4 py-5">
@@ -79,8 +106,6 @@ const LoginPage: FC = () => {
                                         labelText="Password"
                                         value={loginPageState.password}
                                     />
-                                </div>
-                                <div className="col-12">
                                     <Button
                                         type="submit"
                                         variant="success"
@@ -89,6 +114,13 @@ const LoginPage: FC = () => {
                                     >
                                         Login
                                     </Button>
+                                    {flashMessage && (
+                                        <FlashMessage
+                                            variant={flashMessage.variant}
+                                        >
+                                            {flashMessage.text}
+                                        </FlashMessage>
+                                    )}
                                 </div>
                             </div>
                         </Form>
