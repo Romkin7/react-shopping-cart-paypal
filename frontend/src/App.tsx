@@ -27,21 +27,22 @@ const App: FC = () => {
                     />
                     <Route
                         element={
+                            <LoggedOutRoute
+                                userId={loggedInUser?.user?._id as string}
+                                isAuthenticated={loggedInUser.isAuthenticated}
+                            />
+                        }
+                    >
+                        <Route path="/login" element={<LoginPage />} />
+                    </Route>
+                    <Route
+                        element={
                             <ProtectedRoute
                                 isAuthenticated={loggedInUser.isAuthenticated}
                             />
                         }
                     >
                         <Route path="/profile/:id" element={<ProfilePage />} />
-                    </Route>
-                    <Route
-                        element={
-                            <LoggedOutRoute
-                                isAuthenticated={loggedInUser.isAuthenticated}
-                            />
-                        }
-                    >
-                        <Route path="/login" element={<LoginPage />} />
                     </Route>
                 </Routes>
             </main>
