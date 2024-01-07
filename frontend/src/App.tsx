@@ -10,6 +10,7 @@ import ProfilePage from './pages/profile';
 import ProtectedRoute from './ProtectedRoute';
 import { useSelector } from 'react-redux';
 import { AppState } from './store/store';
+import LoggedOutRoute from './LoggedOutRoute';
 
 const App: FC = () => {
     const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
@@ -24,7 +25,6 @@ const App: FC = () => {
                         path="/order-confirmation/:orderId"
                         element={<OrderConfirmationPage />}
                     />
-                    <Route path="/login" element={<LoginPage />} />
                     <Route
                         element={
                             <ProtectedRoute
@@ -33,6 +33,15 @@ const App: FC = () => {
                         }
                     >
                         <Route path="/profile/:id" element={<ProfilePage />} />
+                    </Route>
+                    <Route
+                        element={
+                            <LoggedOutRoute
+                                isAuthenticated={loggedInUser.isAuthenticated}
+                            />
+                        }
+                    >
+                        <Route path="/login" element={<LoginPage />} />
                     </Route>
                 </Routes>
             </main>
