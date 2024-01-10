@@ -11,13 +11,30 @@ import ProtectedRoute from './ProtectedRoute';
 import { useSelector } from 'react-redux';
 import { AppState } from './store/store';
 import LoggedOutRoute from './LoggedOutRoute';
+import FlashMessage from './components/FlashMessage/FlashMessage';
 
 const App: FC = () => {
     const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
+    const flashMessage = useSelector((state: AppState) => state.flashMessage);
     return (
         <BrowserRouter basename="/">
             <Navbar />
             <main className="mt-5">
+                <aside className="py-4">
+                    <div className="container">
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-6">
+                                {flashMessage.isVisible && (
+                                    <FlashMessage
+                                        variant={flashMessage.variant}
+                                    >
+                                        {flashMessage.text}
+                                    </FlashMessage>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </aside>
                 <Routes>
                     <Route path="/" index={true} element={<ProductsPage />} />
                     <Route path="/cart" element={<CartPage />} />

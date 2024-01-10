@@ -12,7 +12,7 @@ export function setFlashMessage(flashMessage: IFlashMessage): AppActions {
     };
 }
 
-export function ResetFlashMessage(): AppActions {
+export function resetFlashMessage(): AppActions {
     return {
         type: RESET_FLASH_MESSAGE,
     };

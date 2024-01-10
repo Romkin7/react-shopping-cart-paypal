@@ -3,8 +3,6 @@ import Form from '../components/Form/Form';
 import TextInput from '../components/TextInput/TextInput';
 import Button from '../components/Button/Button';
 import ILoginBody from '../@types/loginBody';
-import FlashMessage from '../components/FlashMessage/FlashMessage';
-import IFlashMessage from '../@types/flashMessage';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedInUser } from '../store/actions/loggedInUserActions';
@@ -12,6 +10,10 @@ import DecodedToken from '../@types/decodedToken';
 import { Navigate } from 'react-router-dom';
 import { AppState } from '../store/store';
 import request from './api/request';
+import {
+    resetFlashMessage,
+    setFlashMessage,
+} from '../store/actions/flashMessageActions';
 
 /**
  * resetLoginPageState function, is used to reset Login form state.
@@ -28,9 +30,6 @@ const LoginPage: FC = () => {
     const [loginPageState, setLoginPageState] = useState<ILoginBody>(() =>
         resetLoginPageState(),
     );
-    const [flashMessage, setFlashMessage] = useState<IFlashMessage | null>(
-        () => null,
-    );
     const dispatch = useDispatch();
     const loggedInUser = useSelector((state: AppState) => state.loggedInUser);
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +41,7 @@ const LoginPage: FC = () => {
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setFlashMessage(null);
+        dispatch(resetFlashMessage());
         const formData = new FormData(event.target as HTMLFormElement);
         request(
             (event.target as HTMLFormElement).action,
@@ -53,13 +52,25 @@ const LoginPage: FC = () => {
             },
         )
             .then((data) => {
-                setFlashMessage({ variant: 'success', text: data.message });
+                dispatch(
+                    setFlashMessage({
+                        variant: 'success',
+                        text: data.message,
+                        isVisible: true,
+                    }),
+                );
                 window.localStorage.setItem('accessToken', data.accessToken);
                 const decodedToken: DecodedToken = jwtDecode(data.accessToken);
                 dispatch(setLoggedInUser(decodedToken.loggedInUser));
             })
             .catch((error) => {
-                setFlashMessage({ variant: 'danger', text: error.message });
+                dispatch(
+                    setFlashMessage({
+                        variant: 'danger',
+                        text: error.message,
+                        isVisible: true,
+                    }),
+                );
             });
     };
 
@@ -106,21 +117,16 @@ const LoginPage: FC = () => {
                                         labelText="Password"
                                         value={loginPageState.password}
                                     />
-                                    <Button
-                                        type="submit"
-                                        variant="success"
-                                        size="s"
-                                        borderRadius="rounded"
-                                    >
-                                        Login
-                                    </Button>
-                                    {flashMessage && (
-                                        <FlashMessage
-                                            variant={flashMessage.variant}
+                                    <div className="mt-4">
+                                        <Button
+                                            type="submit"
+                                            variant="success"
+                                            size="s"
+                                            borderRadius="rounded"
                                         >
-                                            {flashMessage.text}
-                                        </FlashMessage>
-                                    )}
+                                            Login
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </Form>
