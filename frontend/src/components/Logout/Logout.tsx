@@ -3,6 +3,7 @@ import Form from '../Form/Form';
 import request from '../../pages/api/request';
 import { useDispatch } from 'react-redux';
 import { resetLoggedInUser } from '../../store/actions/loggedInUserActions';
+import { setFlashMessage } from '../../store/actions/flashMessageActions';
 
 interface LogoutProps {
     _id: string;
@@ -16,7 +17,13 @@ const Logout: FC<LogoutProps> = ({ _id }) => {
             (data) => {
                 window.localStorage.removeItem('accessToken');
                 dispatch(resetLoggedInUser());
-                console.log(data.message);
+                dispatch(
+                    setFlashMessage({
+                        variant: 'success',
+                        text: data.message,
+                        isVisible: true,
+                    }),
+                );
             },
         );
     };
